@@ -1,5 +1,5 @@
-from utils import convertDoc2Txt, formatter
-from utils import filterer, start
+from assets.file_manage import convertDoc2Txt, formatter
+from assets.file_manage import filterer, start
 from selenium import webdriver
 
 

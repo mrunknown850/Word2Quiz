@@ -12,15 +12,8 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 
 def convertDoc2Txt(doc_direct: str) -> str:
-    try:
-        text = docx2txt.process(doc_direct)
-        return text
-    except PermissionError:
-        print("Lỗi | Truy cập bị từ chối")
-        exit(1)
-    except FileNotFoundError:
-        print("Lỗi | File không tồn tại")
-        exit(1)
+    text = docx2txt.process(doc_direct)
+    return text
 
 
 def formatter(raw_string_inp: str) -> str:
@@ -45,43 +38,8 @@ def filterer(pre_model, mode, formatted_string: str) -> dict:
     tmpSubOption = []  # [a, b, c, d]
     # Filtered Everything
     # ? ==================== SCAN MODE ====================
-    if mode == "1":
-        for loc, word in enumerate(wordsByWord):
-            # ? ========== Check if the sentence is an OPTION =============
-            if "A." in word or "B." in word or "C." in word or "D." in word:
-                # ? ================= Check if the sentence is a TITLE ========
-                # + 1 everytime it's an option. 1,2,3 is ignored. 4 then it's o
-                # If Title Cycle = 0 (First Question) -> The sentenceSegment is
-                if optionCycle == 0 or ((optionCycle % 4) == 0):
-                    titleList.append(fullSentenceSegment)
-                    counter += 1
-                else:  # ? ================ Check if the sentence is an ANSWER
-                    if SPECIAL_CHAR in fullSentenceSegment:
-                        answerList.append(fullSentenceSegment.replace("<-", ""))
-                        tmpSubOption.append(fullSentenceSegment.replace("<-", ""))
-                    else:  # ? ================ Append OPTION into a temporary
-                        tmpSubOption.append(fullSentenceSegment)
-
-                fullSentenceSegment = ""
-                optionCycle += 1
-            elif word == "Câu" and wordsByWord[loc + 1][:-1].isdigit():
-                # ? ================ If this is NOT the First Question's Title
-                if optionCycle != 0:
-                    # ? ================ In case the tmpString is currently "D"
-                    if SPECIAL_CHAR in fullSentenceSegment:
-                        answerList.append(fullSentenceSegment.replace("<-", ""))
-                        tmpSubOption.append(fullSentenceSegment.replace("<-", ""))
-                    else:
-                        tmpSubOption.append(fullSentenceSegment)
-                    # ! Append the options (1 loop is done)
-                    optionList.append(tmpSubOption)
-                    tmpSubOption = []
-                fullSentenceSegment = ""
-                fullSentenceSegment += word
-            else:
-                fullSentenceSegment += " " + word
     # ? ================== LINEAR MODE ====================
-    elif mode == "2":
+    if mode == "2":
         for loc, word in enumerate(wordsByWord):
             # ? =============== Check if the sentence is an OPTION ============
             if ("A." in word) or ("B." in word) or ("C." in word) or ("D." in word):
@@ -118,42 +76,7 @@ def filterer(pre_model, mode, formatted_string: str) -> dict:
             else:
                 fullSentenceSegment += " " + word
     # ? ==================== FILTERED MODE ====================
-    elif mode == "3":
-        for loc, word in enumerate(wordsByWord):
-            # ? =============== Check if the sentence is an OPTION ============
-            if ("A." in word) or ("B." in word) or ("C." in word) or ("D." in word):
-                # ? ================= Check if the sentence is a TITLE ========
-                # Title Cycle will + 1 everytime it's an option. 1,2,3 is ignor
-                # If Title Cycle = 0 (First Question) -> The sentenceSegment is
-                if optionCycle == 0 or ((optionCycle % 4) == 0):
-                    titleList.append(fullSentenceSegment)
-                    counter += 1
-                else:  # ? ================ Check if the sentence is an ANSWER
-                    if SPECIAL_CHAR in fullSentenceSegment:
-                        answerList.append(fullSentenceSegment.replace("<-", ""))
-                        tmpSubOption.append(fullSentenceSegment.replace("<-", ""))
-                    else:  # ? ================ Append OPTION into a temporary
-                        tmpSubOption.append(fullSentenceSegment)
-
-                fullSentenceSegment = ""
-                optionCycle += 1
-            elif word == "Câu" and wordsByWord[loc + 1][:-1].isdigit():
-                # ? ================ If this is NOT the First Question's Title
-                if optionCycle != 0:
-                    # ? ================ In case the tmpString is currently "D"
-                    if SPECIAL_CHAR in fullSentenceSegment:
-                        answerList.append(fullSentenceSegment.replace("<-", ""))
-                        tmpSubOption.append(fullSentenceSegment.replace("<-", ""))
-                    else:
-                        tmpSubOption.append(fullSentenceSegment)
-                    # ! Append the options (1 loop is done)
-                    optionList.append(tmpSubOption)
-                    tmpSubOption = []
-                fullSentenceSegment = ""
-                fullSentenceSegment += word
-            else:
-                fullSentenceSegment += " " + word
-    del tmpSubOption, fullSentenceSegment, optionCycle
+    # del tmpSubOption, fullSentenceSegment, optionCycle
     titleList = tuple(titleList)
     optionList = tuple(optionList)
     answerList = tuple(answerList)
@@ -167,7 +90,6 @@ def filterer(pre_model, mode, formatted_string: str) -> dict:
         # print(None)
     except IndexError:
         print("Lỗi | Lỗi ký hiệu, kiểm tra lại file")
-    print(None)
     # print(titleList)
     # print(optionList)
     return finalized
