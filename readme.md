@@ -1,7 +1,6 @@
 # Word2Quiz - A Solution for long boring repetitive task of making Quiz from a Word file
 For all the one who have tirely copying questions by questions for 4-6 hours straight doing nothing just copying which can be both ineffective and inefficient. So this program gonna help yall so no more boring copying lol.
-
-## Installation
+*P.S: This is the third re-upload of the repos since I accidentally pushed the wrong file to GitHub*
 You can download this at [the release](https://github.com/mrunknown6000/Word2Quiz/releases/tag/stable) and yes, no installation. This is a standalone program so you only need to execute this from your command line.
 
 ## How To Use
