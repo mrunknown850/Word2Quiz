@@ -1,3 +1,6 @@
+# Archival
+Due to the codebase's unreadablility (as I've made this very early in my coding carrier), the project will be archived and be refactored into a better, more readable, modular codebase.
+
 # Word2Quiz - A Solution for long boring repetitive task of making Quiz from a Word file
 For all the one who have tirely copying questions by questions for 4-6 hours straight doing nothing just copying which can be both ineffective and inefficient. So this program gonna help yall so no more boring copying lol.
 *P.S: This is the third re-upload of the repos since I accidentally pushed the wrong file to GitHub*
@@ -25,3 +28,4 @@ You can download this at [the release](https://github.com/mrunknown6000/Word2Qui
 | File Not Found | The file you put in the directory when the program ask you to is no where to be found using the given directory. Check the Word file directory then run the program again|
 | Filter Indexer failed| There is an error found using the built-in type safe check. Check your Word document and follow the Word File Format above|
 | Timeout | This error occur when a website take too long to load a needed element for Selenium to send action to. You might need to switch your network or close program that taking alot of bandwidth. (Timeout durration is 30 seconds per pages)
+
